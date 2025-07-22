@@ -1,0 +1,460 @@
+@import 'tailwindcss';
+@plugin "@tailwindcss/forms";
+@plugin '@tailwindcss/typography';
+@source '../node_modules/pliny';
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* Core theme configuration */
+@theme {
+  /* Font families - Sistema FootballDecoded */
+  --font-sans:
+    var(--font-ibm-plex-sans), ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji',
+    'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+
+  --font-headings:
+    var(--font-inter), ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+    'Segoe UI Symbol', 'Noto Color Emoji';
+
+  --font-mono:
+    var(--font-ibm-plex-mono), ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Monaco, Consolas,
+    'Liberation Mono', 'Courier New', monospace;
+
+  /* Colors - Paleta FootballDecoded basada en slate, sky, indigo */
+  --color-primary-50: oklch(0.971 0.014 220.198);
+  --color-primary-100: oklch(0.948 0.028 220.258);
+  --color-primary-200: oklch(0.899 0.061 220.231);
+  --color-primary-300: oklch(0.823 0.12 225.018);
+  --color-primary-400: oklch(0.718 0.202 230.761);
+  --color-primary-500: oklch(0.656 0.241 235.308);
+  --color-primary-600: oklch(0.592 0.249 240.584);
+  --color-primary-700: oklch(0.525 0.223 245.958);
+  --color-primary-800: oklch(0.459 0.187 250.815);
+  --color-primary-900: oklch(0.408 0.153 255.432);
+  --color-primary-950: oklch(0.284 0.109 260.907);
+
+  --color-gray-50: oklch(0.985 0.002 247.839);
+  --color-gray-100: oklch(0.967 0.003 264.542);
+  --color-gray-200: oklch(0.928 0.006 264.531);
+  --color-gray-300: oklch(0.872 0.01 258.338);
+  --color-gray-400: oklch(0.707 0.022 261.325);
+  --color-gray-500: oklch(0.551 0.027 264.364);
+  --color-gray-600: oklch(0.446 0.03 256.802);
+  --color-gray-700: oklch(0.373 0.034 259.733);
+  --color-gray-800: oklch(0.278 0.033 256.848);
+  --color-gray-900: oklch(0.21 0.034 264.665);
+  --color-gray-950: oklch(0.13 0.028 261.692);
+
+  /* Line heights - Jerarquía FootballDecoded */
+  --line-height-11: 2.75rem;
+  --line-height-12: 3rem;
+  --line-height-13: 3.25rem;
+  --line-height-14: 3.5rem;
+
+  /* Z-index values */
+  --z-60: 60;
+  --z-70: 70;
+  --z-80: 80;
+}
+
+/* Configuración de familias tipográficas */
+@layer base {
+  /* Asignación de familias por elemento */
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-headings);
+    font-weight: 600;
+    letter-spacing: var(--tracking-tight);
+  }
+
+  body {
+    font-family: var(--font-sans);
+    font-weight: 400;
+    line-height: var(--leading-relaxed);
+  }
+
+  code,
+  pre,
+  .font-mono {
+    font-family: var(--font-mono);
+  }
+
+  /* Elementos técnicos con mono */
+  .metric,
+  .stat,
+  .score,
+  .percentage {
+    font-family: var(--font-mono);
+    font-weight: 500;
+  }
+}
+
+/* Compatibilidad de bordes por defecto */
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-slate-200, currentColor);
+  }
+
+  a,
+  button {
+    outline-color: var(--color-sky-500);
+  }
+
+  a:focus-visible,
+  button:focus-visible {
+    outline: 2px solid;
+    border-radius: var(--radius-sm);
+    outline-color: var(--color-sky-500);
+  }
+}
+
+@layer utilities {
+  /* Utilidades tipográficas FootballDecoded */
+  .font-headings {
+    font-family: var(--font-headings);
+  }
+
+  .font-body {
+    font-family: var(--font-sans);
+  }
+
+  .font-mono {
+    font-family: var(--font-mono);
+  }
+
+  /* Prose personalizado optimizado para análisis técnicos */
+  .prose {
+    --tw-prose-body: var(--color-slate-700);
+    --tw-prose-headings: var(--color-slate-900);
+    --tw-prose-lead: var(--color-slate-600);
+    --tw-prose-links: var(--color-sky-700);
+    --tw-prose-bold: var(--color-slate-900);
+    --tw-prose-counters: var(--color-slate-500);
+    --tw-prose-bullets: var(--color-slate-300);
+    --tw-prose-hr: var(--color-slate-200);
+    --tw-prose-quotes: var(--color-slate-900);
+    --tw-prose-quote-borders: var(--color-slate-300);
+    --tw-prose-captions: var(--color-slate-500);
+    --tw-prose-code: var(--color-indigo-600);
+    --tw-prose-pre-code: var(--color-slate-200);
+    --tw-prose-pre-bg: var(--color-slate-800);
+    --tw-prose-th-borders: var(--color-slate-300);
+    --tw-prose-td-borders: var(--color-slate-200);
+
+    /* Espaciado optimizado para lectura técnica */
+    & p {
+      margin-top: 1.25em;
+      margin-bottom: 1.25em;
+      font-family: var(--font-sans);
+      line-height: 1.75;
+    }
+
+    /* Enlaces con mejor contraste y hover */
+    & a {
+      color: var(--tw-prose-links);
+      text-decoration: underline;
+      text-decoration-thickness: 1px;
+      text-underline-offset: 2px;
+      font-weight: 500;
+
+      &:hover {
+        color: var(--color-sky-800);
+        text-decoration-thickness: 2px;
+      }
+
+      & code {
+        color: var(--color-sky-600);
+        background-color: var(--color-sky-50);
+      }
+    }
+
+    /* Títulos con Inter y espaciado optimizado */
+    & :where(h1, h2, h3, h4, h5, h6) {
+      font-family: var(--font-headings);
+      font-weight: 600;
+      letter-spacing: var(--tracking-tight);
+      scroll-margin-top: 2rem;
+    }
+
+    & h1 {
+      font-size: 2.25em;
+      margin-top: 0;
+      margin-bottom: 0.8888889em;
+      line-height: 1.1111111;
+      font-weight: 700;
+    }
+
+    & h2 {
+      font-size: 1.875em;
+      margin-top: 1.6em;
+      margin-bottom: 0.8em;
+      line-height: 1.3333333;
+      font-weight: 600;
+    }
+
+    & h3 {
+      font-size: 1.5em;
+      margin-top: 1.6em;
+      margin-bottom: 0.6em;
+      line-height: 1.6;
+      font-weight: 600;
+    }
+
+    /* Código inline con mejor legibilidad */
+    & :where(code):not(pre code) {
+      font-family: var(--font-mono);
+      color: var(--tw-prose-code);
+      background-color: var(--color-slate-100);
+      padding: 0.125rem 0.375rem;
+      border-radius: 0.25rem;
+      font-size: 0.875em;
+      font-weight: 500;
+    }
+
+    /* Bloques de código */
+    & pre {
+      background-color: var(--tw-prose-pre-bg);
+      border-radius: 0.5rem;
+      font-size: 0.875em;
+      line-height: 1.7142857;
+      margin-top: 1.7142857em;
+      margin-bottom: 1.7142857em;
+      overflow-x: auto;
+      padding: 1.1428571em 1.2857143em;
+    }
+
+    & pre code {
+      color: var(--tw-prose-pre-code);
+      font-family: var(--font-mono);
+      font-size: inherit;
+      font-weight: 400;
+      line-height: inherit;
+    }
+
+    /* Citas mejoradas para análisis */
+    & blockquote {
+      border-left: 4px solid var(--tw-prose-quote-borders);
+      padding-left: 1.5rem;
+      font-style: italic;
+      color: var(--tw-prose-quotes);
+      margin: 1.6em 0;
+      background-color: var(--color-slate-50);
+      padding: 1rem 1.5rem;
+      border-radius: 0 0.5rem 0.5rem 0;
+    }
+
+    /* Listas con mejor espaciado */
+    & ul,
+    & ol {
+      margin-top: 1.25em;
+      margin-bottom: 1.25em;
+      padding-left: 1.625em;
+    }
+
+    & li {
+      margin-top: 0.5em;
+      margin-bottom: 0.5em;
+      font-family: var(--font-sans);
+    }
+
+    /* Tablas para datos técnicos */
+    & table {
+      width: 100%;
+      table-layout: auto;
+      text-align: left;
+      margin-top: 2em;
+      margin-bottom: 2em;
+      font-family: var(--font-sans);
+      border-collapse: collapse;
+      border-radius: 0.5rem;
+      overflow: hidden;
+      border: 1px solid var(--color-slate-200);
+    }
+
+    & thead {
+      background-color: var(--color-slate-50);
+    }
+
+    & thead th {
+      font-family: var(--font-headings);
+      font-weight: 600;
+      color: var(--color-slate-900);
+      vertical-align: bottom;
+      padding: 0.75rem;
+      border-bottom: 1px solid var(--color-slate-200);
+    }
+
+    & tbody td {
+      vertical-align: baseline;
+      padding: 0.75rem;
+      border-bottom: 1px solid var(--color-slate-100);
+      font-family: var(--font-sans);
+    }
+
+    /* Métricas y datos numéricos */
+    & .metric,
+    & .stat {
+      font-family: var(--font-mono);
+      font-weight: 600;
+      color: var(--color-indigo-700);
+    }
+  }
+
+  /* Modo oscuro para prose */
+  .prose-invert {
+    --tw-prose-body: var(--color-slate-300);
+    --tw-prose-headings: var(--color-slate-100);
+    --tw-prose-lead: var(--color-slate-400);
+    --tw-prose-links: var(--color-sky-400);
+    --tw-prose-bold: var(--color-slate-100);
+    --tw-prose-counters: var(--color-slate-400);
+    --tw-prose-bullets: var(--color-slate-600);
+    --tw-prose-hr: var(--color-slate-700);
+    --tw-prose-quotes: var(--color-slate-100);
+    --tw-prose-quote-borders: var(--color-slate-600);
+    --tw-prose-captions: var(--color-slate-400);
+    --tw-prose-code: var(--color-indigo-400);
+    --tw-prose-pre-code: var(--color-slate-200);
+    --tw-prose-pre-bg: var(--color-slate-800);
+    --tw-prose-th-borders: var(--color-slate-600);
+    --tw-prose-td-borders: var(--color-slate-700);
+
+    & a {
+      color: var(--tw-prose-links);
+
+      &:hover {
+        color: var(--color-sky-300);
+      }
+
+      & code {
+        color: var(--color-sky-400);
+        background-color: var(--color-sky-900);
+      }
+    }
+
+    & :where(code):not(pre code) {
+      color: var(--tw-prose-code);
+      background-color: var(--color-slate-800);
+    }
+
+    & blockquote {
+      border-left-color: var(--tw-prose-quote-borders);
+      color: var(--tw-prose-quotes);
+      background-color: var(--color-slate-800);
+    }
+
+    & table {
+      border-color: var(--color-slate-700);
+    }
+
+    & thead {
+      background-color: var(--color-slate-800);
+    }
+
+    & thead th {
+      color: var(--color-slate-100);
+      border-bottom-color: var(--color-slate-600);
+    }
+
+    & tbody td {
+      border-bottom-color: var(--color-slate-700);
+    }
+
+    & .metric,
+    & .stat {
+      color: var(--color-indigo-400);
+    }
+  }
+
+  /* Utilidades semánticas FootballDecoded */
+  .text-concept {
+    color: var(--color-sky-700);
+  }
+
+  .dark .text-concept {
+    color: var(--color-sky-400);
+  }
+
+  .badge-role {
+    background-color: var(--color-sky-100);
+    color: var(--color-sky-800);
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.375rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+  }
+
+  .dark .badge-role {
+    background-color: var(--color-sky-900);
+    color: var(--color-sky-200);
+  }
+}
+
+/* Elementos específicos */
+.task-list-item::before {
+  @apply hidden;
+}
+
+.task-list-item {
+  @apply list-none;
+}
+
+.footnotes {
+  @apply mt-12 border-t border-slate-200 pt-8 dark:border-slate-700;
+}
+
+.data-footnote-backref {
+  @apply no-underline;
+}
+
+.csl-entry {
+  @apply my-5;
+}
+
+/* Scrollbar utilities */
+.no-scrollbar::-webkit-scrollbar,
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+.no-scrollbar,
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Autofill styles */
+input:-webkit-autofill,
+input:-webkit-autofill:focus {
+  transition:
+    background-color 600000s 0s,
+    color 600000s 0s;
+}
+
+.katex-display {
+  overflow: auto hidden;
+}
+
+/* Content header links */
+.content-header-link {
+  opacity: 0;
+  margin-left: -24px;
+  padding-right: 4px;
+}
+
+.content-header:hover .content-header-link,
+.content-header-link:hover {
+  opacity: 1;
+}
+
+.linkicon {
+  display: inline-block;
+  vertical-align: middle;
+}
